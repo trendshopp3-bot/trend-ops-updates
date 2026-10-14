@@ -1,0 +1,63 @@
+TREND OPS — ATUALIZAÇÃO AUTOMÁTICA PELO GITHUB
+
+REPOSITÓRIO
+https://github.com/trendshopp3-bot/trend-ops-updates
+
+PUBLICAR ESTA VERSÃO — 1.1.6
+1. Extraia este ZIP.
+2. Dê dois cliques em PUBLICAR-1.1.6.cmd.
+3. Se o Git pedir login, entre na conta que tem acesso ao repositório.
+4. O script envia a branch main e a tag v1.1.6.
+5. O GitHub Actions gera o Setup.exe, .blockmap e latest.yml automaticamente.
+
+O script funciona tanto dentro de um clone existente quanto em uma pasta nova: em pasta nova ele clona o repositório automaticamente.
+
+IMPORTANTE
+Para o auto-update funcionar facilmente em todos os PCs, deixe o repositório público.
+O aplicativo busca os arquivos da Release do GitHub sem login do usuário.
+
+PRIMEIRA CONFIGURAÇÃO — UMA VEZ
+1. Crie/abra o repositório trendshopp3-bot/trend-ops-updates no GitHub.
+2. Deixe o repositório PUBLIC.
+3. Envie TODOS os arquivos desta pasta para a branch main, inclusive a pasta .github.
+4. No GitHub, abra Actions e confirme que o workflow "Publicar atualização Trend Ops" aparece.
+5. Em Settings > Actions > General, permita workflows se o GitHub solicitar.
+
+PUBLICAR A VERSÃO 1.1.6
+Opção A — pelo terminal, dentro desta pasta:
+  git tag -a v1.1.6 -m "Trend Ops v1.1.6"
+  git push origin v1.1.6
+
+Opção B — nas próximas versões, dê dois cliques em PUBLICAR-ATUALIZACAO.cmd.
+Ele pede a nova versão, atualiza package.json, cria a tag e envia.
+
+O QUE O GITHUB FAZ AUTOMATICAMENTE
+- abre um Windows virtual;
+- instala Node.js;
+- instala dependências;
+- gera o instalador NSIS;
+- cria uma Release no GitHub;
+- publica Trend-Ops-Setup-X.Y.Z.exe;
+- publica latest.yml;
+- publica o arquivo .blockmap.
+
+O QUE O APP FAZ
+Ao abrir uma versão instalada, electron-updater consulta a Release.
+Se a versão da Release for maior que a instalada, o Trend Ops baixa a atualização do GitHub e instala.
+
+REGRA PRINCIPAL
+NUNCA publique atualização com a mesma versão.
+Exemplo:
+  instalada: 1.1.5
+  nova:      1.1.6
+Depois:
+  1.1.7
+  1.1.8
+etc.
+
+ATENÇÃO
+npm start NÃO testa o auto-update, porque roda em modo desenvolvimento.
+Teste usando o Trend Ops instalado pelo Setup.exe.
+
+CORRECAO 1.1.6:
+O PUBLICAR-1.1.6.cmd usa uma pasta temporaria fora do Trend Ops para evitar que o Robocopy tente copiar uma pasta para dentro dela mesma.

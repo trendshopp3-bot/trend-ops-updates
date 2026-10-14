@@ -1,0 +1,24 @@
+Trend Ops 13 — iMile consolidado
+
+Fluxo iMile Motorista preservado:
+1. Primeiro motorista começa na tela LOGIN.
+2. Limpa Conta e Senha antes de preencher.
+3. Login.
+4. Fecha o popup "Ordens não recolhidas permanecem" pelo X, quando aparecer.
+5. Fecha "Importante para protegê-lo" em SIM.
+6. Fecha "Compromisso de Operação Offline" em COMPROMISSO.
+7. Abre Leitura de coleta.
+8. Abre o lápis / entrada manual AWB.
+9. Para cada AWB: limpa totalmente o anterior, envia o novo inteiro, refoca o campo e dá ENTER.
+10. Se aparecer popup de repetido/erro, usa somente o CONFIRMAR do popup (ignora o Confirmar fixo do rodapé), fecha e limpa o AWB antes do próximo.
+11. Em mais de um motorista: termina o bloco atual, volta para Coleta, Mais, rola até Sair, sai e entra no próximo login.
+
+Proteções mantidas:
+- Não compara IDs da tela AWB para validar motorista (evita falso "conta mudou").
+- Nunca envia além da quantidade/códigos separados do PDF.
+- Não Perturbe é solicitado antes das filas.
+- Seleção estilo Excel: clique no primeiro e Shift+clique no último; Ctrl+clique para avulsos.
+- Apagar selecionados visível na tela da fila.
+- JeT Motorista, JeT Saída e JeT Entrada preservados.
+
+Feito por Taka.

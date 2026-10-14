@@ -1,0 +1,46 @@
+{
+  "version": "1.1.6",
+  "testes_aprovados": [
+    "JeT: aprendizado 120 segundos controlados, sem avanço no silêncio, erro pendente e acerto",
+    "Regra repetido: 25%, mínimo20, sequencia5, padrão identificado",
+    "iMile: campo AWB, Enter único, contador, já coletado, erro presumido, desconhecido pausa",
+    "ADB: seleção, pausa, deduplicação, desconexão e validação",
+    "Aba Códigos iMile: extração da lista, origem, fila serial, salvamento e bloqueio de reenvio incerto",
+    "Extração AWB: rejeita nomes/endereço/SKU e códigos ambíguos; mantém AWB 33 de 13 dígitos",
+    "Modo rápido: selecionar/apagar/substituir AWB, Enter único, capacidade por aparelho, compatibilidade Android antigo",
+    "Fluxo rápido: 1 dump por código após confirmação recente; troca de app, pausa, cache expirado e resultado incerto obrigam nova tela; bloco de limpeza e digitação substitui integralmente o AWB",
+    "Enter e primeira leitura em uma chamada, Enter único nas tentativas subsequentes; cancelamento antes do Enter preservado",
+    "Oito motoristas cadastrados; seleção múltipla; divisão 100 + 200 = 300; 100 + 100 bloqueado; zero/fração/duplicação e AWB ausente bloqueados",
+    "Credenciais fora do ZIP; vault criptografado; senha não retorna pela API; backend basic_text usa só memória",
+    "Login, conferência da identidade, Coleta, Leitura de coleta, lápis e AWB em simulador de telas",
+    "Sair após rolagem, troca de motorista, conta já correta sem relogar, falha de login sem repetição cega e pausa durante login",
+    "Ponte nativa impede envio antes de preparar conta, com conta diferente e após pausa",
+    "Fila do HTML: atribuição de motorista por etiqueta, troca na fronteira do bloco, soma incorreta bloqueada, pausa na navegação sem envio",
+    "Thiago D21044729901 cadastrado; alocação exclusiva de 300 etiquetas validada",
+    "Login/coleta testados em variantes com.imile.redelivery e com.imile.driver; aplicativo diferente bloqueado antes do login",
+    "Aviso de proteção após login: confirmação sim seguida de releitura; botão ausente e aviso persistente pausam; máximo de três tentativas",
+    "Popups sobrepostos: Compromisso antes de sim; camada superior impede clique na inferior; coordenada adaptada à área visível acima da navegação Android"
+  ],
+  "limites": [
+    "Interface atual não testada em navegador real nesta revisão",
+    "ADB e tela Android simulados",
+    "Instalador Windows não compilado",
+    "iMile no Redmi não testado nesta revisão",
+    "PDF original OSMAR_3.pdf não disponível para teste; regressão usa os valores da imagem",
+    "Ganho de velocidade não medido em aparelho real",
+    "Navegação de motoristas testada com XML simulado; celular real não disponível",
+    "Layout validado por estrutura e controles simulados; sem navegador real nesta revisão"
+  ],
+  "imile_motorista_revision": "LOGIN_POPUPS_LEITURA_LAPIS_AWB_ULTRA_20261013",
+  "imile_motorista_flow": [
+    "login",
+    "senha",
+    "popup_sim",
+    "popup_compromisso",
+    "leitura_de_coleta",
+    "lapis",
+    "awb",
+    "bipagem_turbo"
+  ],
+  "notes": "Conta validada no login; tela AWB não compara IDs/marcas d'água. Bipagem reutiliza campo AWB e usa um comando ADB para toque+limpeza+codigo+Enter."
+}
