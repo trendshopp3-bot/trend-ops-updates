@@ -26,8 +26,53 @@ jobs:
         shell: pwsh
         run: npm install
 
-      - name: Gerar instalador e publicar Release
+      - name: Gerar instalador sem publicar
+        shell: pwsh
+        run: npx electron-builder --win nsis --publish never
+
+      - name: Conferir arquivos gerados
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $exe = "dist/Trend-Ops-Setup-$version.exe"
+          $blockmap = "$exe.blockmap"
+          $latest = "dist/latest.yml"
+          foreach ($file in @($exe, $blockmap, $latest)) {
+            if (-not (Test-Path $file)) {
+              Write-Host "Conteudo da pasta dist:"
+              Get-ChildItem -Recurse dist | Select-Object FullName,Length
+              throw "Arquivo obrigatorio nao foi gerado: $file"
+            }
+          }
+          Write-Host "Arquivos OK:"
+          Get-Item $exe,$blockmap,$latest | Select-Object Name,Length
+
+      - name: Criar ou completar Release
         shell: pwsh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx electron-builder --win nsis --publish always
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $tag = "v$version"
+          $repo = $env:GITHUB_REPOSITORY
+          $exe = "dist/Trend-Ops-Setup-$version.exe"
+          $blockmap = "$exe.blockmap"
+          $latest = "dist/latest.yml"
+
+          gh release view $tag --repo $repo *> $null
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "Release $tag ainda nao existe. Criando..."
+            gh release create $tag --repo $repo --target $env:GITHUB_SHA --title $version --notes "Trend Ops $tag"
+            if ($LASTEXITCODE -ne 0) { throw "Falha ao criar a Release $tag" }
+          } else {
+            Write-Host "Release $tag ja existe. Ela sera completada/atualizada."
+          }
+
+          Write-Host "Enviando EXE, blockmap e latest.yml..."
+          gh release upload $tag $exe $blockmap $latest --clobber --repo $repo
+          if ($LASTEXITCODE -ne 0) { throw "Falha ao enviar os arquivos para a Release $tag" }
+
+          gh release edit $tag --repo $repo --latest
+          if ($LASTEXITCODE -ne 0) { throw "Arquivos enviados, mas houve falha ao marcar a Release como Latest." }
+
+          Write-Host "Release $tag completa."
